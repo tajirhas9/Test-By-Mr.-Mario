@@ -29,6 +29,11 @@
 			},
 		},
 		methods: {
+			resetUI() {
+				;(<HTMLInputElement>document.getElementById('skill')).value = ''
+				;(<HTMLInputElement>document.getElementById('level')).value = ''
+				document.getElementById('header-button')!.innerText = 'Add'
+			},
 			addSkill() {
 				let userId = parseInt(this.$route.params.id as string)
 
@@ -38,6 +43,7 @@
 				let newSkill: ISkill = { name: skillName, level: parseInt(skillLevel) }
 
 				this.store.addSkill(newSkill, userId)
+				this.resetUI()
 			},
 		},
 		mounted() {
@@ -53,9 +59,7 @@
 			$route(newVal, oldVal) {
 				try {
 					if (newVal.name !== 'index') {
-						;(<HTMLInputElement>document.getElementById('skill')).value = ''
-						;(<HTMLInputElement>document.getElementById('level')).value = ''
-						document.getElementById('header-button')!.innerText = 'Add'
+						this.resetUI()
 					}
 				} catch (e) {}
 			},
